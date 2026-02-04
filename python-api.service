@@ -3,6 +3,9 @@ Description=Local Python HTTP API
 After=network.target
 
 [Service]
+ExecStartPre=/sbin/iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 3000
+ExecStartPost=/sbin/iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 3000
+
 ExecStart=/usr/bin/python3 /home/user/CPSC222/python_api.py
 WorkinDirectory=/home/user/CPSC222
 User=user

@@ -4,7 +4,7 @@ import json
 import base64
 import os
 
-HOST = "0.0.0.0"
+HOST = "127.0.0.1"
 PORT = 3000
 
 USERNAME = "test"
