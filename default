@@ -107,11 +107,13 @@ server {
 
 server {
   listen 443 ssl default_server;
- # listen[::]:443 ssl default_server;
   server_name _;
 
   ssl_certificate /etc/ssl/certs/selfsigned.crt;
   ssl_certificate_key /etc/ssl/private/selfsigned.key;
+
+  root /home/user/CPSC222;
+  index php_webserver.php index.html;
 
   location /api/ {
     proxy_pass http://127.0.0.1:3000;
@@ -120,8 +122,16 @@ server {
     proxy_set_header X-Forwarded-Proto $scheme;
   }
 
+  location ~ \.php$ {
+    include snippets/fastcgi-php.conf;
+
+    fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
+
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    include fastcgi_params;
+  }
+
   location / {
-    root /home/user/CPSC222;
-    index index.html;
+    try_files $uri $uri/ =404;
   }
 }
