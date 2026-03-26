@@ -113,7 +113,7 @@ server {
   ssl_certificate_key /etc/ssl/private/selfsigned.key;
 
   root /home/user/CPSC222;
-  index php_webserver.php index.html chpts3-4.php;
+  index php_webserver.php index.html chpts3-4.php php_chapts5-6_main.php;
 
   location /api/ {
     proxy_pass http://127.0.0.1:3000;
